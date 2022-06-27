@@ -24,22 +24,22 @@ class URLTree:
         prefixToURLMapping = {}
 
         for path in resource_array:
-            print(resource_array)
             prefix = path[0]
-            if prefix[0] == '{':
-                prefix = '{}'
             path.pop(0)
-            if prefix in prefixToURLMapping:
-                prefixToURLMapping[prefix].append(path)
+    
+            if (path):
+                if prefix in prefixToURLMapping:
+                    prefixToURLMapping[prefix].append(path)
+                else:
+                    prefixToURLMapping[prefix] = [path]
             else:
-                prefixToURLMapping[prefix] = [path]
-        print(prefixToURLMapping)
+                prefixToURLMapping[prefix] = []
+
         for prefix in prefixToURLMapping:
             node = self.AddNodeToChildren(prefix)
-            a = prefixToURLMapping[path]
-            print(a)
-            if (a):
-                node.SetChildrenFromArray(prefixToURLMapping[prefix])
+            _nodeChildren = prefixToURLMapping[prefix]
+            if (_nodeChildren):
+                node.SetChildrenFromArray(_nodeChildren)
 
         return self
     
@@ -52,7 +52,7 @@ class URLTree:
             path_array = path.split("/")
             path_array.pop(0)
             resource_id_array.append(path_array)
-            
+
         return tree.SetChildrenFromArray(resource_id_array)
         
 
